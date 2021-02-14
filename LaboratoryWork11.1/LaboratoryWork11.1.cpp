@@ -50,25 +50,29 @@ void PrintList(List* first)
     }
 }
 
-void DeleteElements(List *first)
+void DeleteElements(List* &first)
 {
-    List* p = first;
-    while (p->data % 2 == 0)
+    List* newFirst = first;
+    while (first != NULL && first->data % 2 == 0)
     {
-        List* q = first;
-        first = p->next;
-        delete q;
-        p = first;
+        newFirst = first->next;
+        delete first;
+        first = newFirst;
     }
-    while (p->next != NULL)
+    while (first != NULL && first->next != NULL)
     {
-        if (p->next->data % 2 == 0)
+        if (first->next->data % 2 == 0)
         {
-            List* q = p->next;
-            p->next = p->next->next;
-            delete q;
+            List* newNextElement = first->next->next;
+            delete first->next;
+            first->next = newNextElement;
         }
+        else
+        {
+            first = first->next;
+        }        
     }
+    first = newFirst;
 }
 
 int main()
